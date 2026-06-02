@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Escola de Música Arena RP — Inicio</title>
+  <meta name="description" content="A escola de música mais preparada e completa do Rio de Janeiro. Aulas de música a partir dos 3 anos em Bangu e Ilha do Governador."/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    /* ── HOME SPECIFIC ──────────────────────── */
+    #particles {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: calc(var(--nav-h) + 2rem) 0 4rem;
+    }
+    .hero-radial {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 90% 80% at 65% 50%, rgba(255,208,0,0.07) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 50% at 5% 80%, rgba(0,255,163,0.04) 0%, transparent 60%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,208,0,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,208,0,0.03) 1px, transparent 1px);
+      background-size: 72px 72px;
+    }
+    .hero-inner {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: rgba(255,208,0,0.08);
+      border: 1px solid rgba(255,208,0,0.2);
+      border-radius: 50px;
+      padding: 0.45rem 1rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.75rem;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 5.5vw, 5rem);
+      font-weight: 900;
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+    .hero-title span { color: var(--gold); }
+    .hero-title em {
+      font-style: italic;
+      background: linear-gradient(135deg, var(--gold), var(--neon));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-desc {
+      font-size: 1.1rem;
+      color: var(--gray3);
+      line-height: 1.75;
+      max-width: 500px;
+      margin-bottom: 2.5rem;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+      margin-bottom: 3.5rem;
+    }
+    .hero-stats-row {
+      display: flex;
+      gap: 2.5rem;
+    }
+    .hero-stat-n {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .hero-stat-l {
+      font-size: 0.72rem;
+      color: var(--gray2);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 0.2rem;
+    }
+
+    /* Hero visual */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-orb {
+      width: 420px; height: 420px;
+      border-radius: 50%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-orb-ring {
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      border: 1px solid rgba(255,208,0,0.12);
+      animation: orbit-spin 12s linear infinite;
+    }
+    .hero-orb-ring::before {
+      content: '';
+      position: absolute;
+      top: -3px; left: 50%;
+      transform: translateX(-50%);
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 12px var(--gold);
+    }
+    .hero-orb-ring2 {
+      position: absolute;
+      inset: 30px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,255,163,0.08);
+      animation: orbit-spin 8s linear infinite reverse;
+    }
+    .hero-orb-ring2::before {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 50%;
+      transform: translateX(-50%);
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--neon);
+      box-shadow: 0 0 10px var(--neon);
+    }
+    @keyframes orbit-spin { to { transform: rotate(360deg); } }
+
+    .hero-orb-core {
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, var(--dark3), var(--black));
+      border: 1px solid rgba(255,208,0,0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      box-shadow:
+        0 0 60px rgba(255,208,0,0.12),
+        inset 0 0 40px rgba(255,208,0,0.05);
+      position: relative;
+      z-index: 1;
+    }
+    .hero-orb-icon {
+      font-size: 4rem;
+      filter: drop-shadow(0 0 20px rgba(255,208,0,0.5));
+      animation: float-icon 4s ease-in-out infinite;
+    }
+    @keyframes float-icon {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .hero-orb-label {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+    }
+    .hero-orb-label .top { font-size: 0.6rem; letter-spacing: 0.3em; color: var(--gray2); text-transform: uppercase; }
+    .hero-orb-label .main { font-size: 1.2rem; font-weight: 900; color: var(--gold); }
+    .hero-orb-label .sub { font-size: 0.6rem; letter-spacing: 0.15em; color: var(--gray3); text-transform: uppercase; }
+
+    .hero-float {
+      position: absolute;
+      background: rgba(20,20,20,0.9);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,208,0,0.2);
+      border-radius: 14px;
+      padding: 0.85rem 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    }
+    .hero-float.f1 { top: 8%; right: -4%; animation: float-card 4s ease-in-out infinite; }
+    .hero-float.f2 { bottom: 14%; left: -6%; animation: float-card 4s ease-in-out infinite 2s; }
+    .hero-float.f3 { bottom: 40%; right: -8%; animation: float-card 3s ease-in-out infinite 1s; }
+    @keyframes float-card {
+      0%,100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(1deg); }
+    }
+    .hero-float-icon {
+      width: 34px; height: 34px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+    .hero-float-icon.neon { background: linear-gradient(135deg, #00FFA3, #00AAFF); }
+
+    /* Marquee */
+    .marquee-section {
+      padding: 2rem 0;
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .marquee-track {
+      display: flex;
+      gap: 3rem;
+      animation: marquee 25s linear infinite;
+      width: max-content;
+    }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+    .marquee-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      white-space: nowrap;
+      color: var(--gray3);
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+    .marquee-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* Features grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .feature-card {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition), border-color var(--transition);
+    }
+    .feature-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--neon));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s;
+    }
+    .feature-card:hover { transform: translateY(-5px); border-color: var(--border-g); }
+    .feature-card:hover::after { transform: scaleX(1); }
+    .feature-icon-wrap {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      background: var(--gold-dim);
+      border: 1px solid rgba(255,208,0,0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .feature-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .feature-desc { font-size: 0.85rem; color: var(--gray3); line-height: 1.6; }
+    .feature-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-top: 1rem;
+      transition: gap var(--transition);
+    }
+    .feature-link:hover { gap: 0.6rem; }
+
+    /* Course preview */
+    .courses-preview {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    .cp-card {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem 1.25rem;
+      text-align: center;
+      cursor: pointer;
+      transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .cp-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,208,0,0.07), transparent);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .cp-card:hover::before { opacity: 1; }
+    .cp-card:hover { transform: translateY(-6px); border-color: var(--border-g); box-shadow: 0 12px 40px rgba(255,208,0,0.1); }
+    .cp-icon { font-size: 2.4rem; margin-bottom: 0.75rem; }
+    .cp-name { font-size: 0.92rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .cp-sub { font-size: 0.75rem; color: var(--gray2); }
+
+    /* CTA banner */
+    .cta-banner {
+      background: linear-gradient(135deg, rgba(255,208,0,0.08) 0%, rgba(0,255,163,0.04) 100%);
+      border: 1px solid rgba(255,208,0,0.15);
+      border-radius: var(--radius-xl);
+      padding: 5rem 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-banner::before {
+      content: '♫';
+      position: absolute;
+      font-size: 18rem;
+      opacity: 0.025;
+      right: -2rem; top: -3rem;
+      line-height: 1;
+      pointer-events: none;
+      color: var(--gold);
+    }
+    .cta-banner-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+    .cta-banner-title span { color: var(--gold); }
+    .cta-banner p { color: var(--gray3); font-size: 1.05rem; margin-bottom: 2.5rem; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    /* Footer */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      padding: 5rem 0 2rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2.5fr 1fr 1fr 1.2fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+    .footer-brand { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 900; margin-bottom: 0.75rem; }
+    .footer-brand span { color: var(--gold); }
+    .footer-desc { font-size: 0.85rem; color: var(--gray2); line-height: 1.7; margin-bottom: 1.5rem; }
+    .footer-socials { display: flex; gap: 0.6rem; }
+    .footer-social-btn {
+      width: 38px; height: 38px;
+      background: var(--dark3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: border-color var(--transition), background var(--transition);
+      text-decoration: none;
+    }
+    .footer-social-btn:hover { border-color: var(--border-g); background: var(--gold-dim); }
+    .footer-col-h { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray2); margin-bottom: 1.2rem; }
+    .footer-links { display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-links a { font-size: 0.87rem; color: var(--gray3); transition: color var(--transition); }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--gray2);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .footer-bottom span { color: var(--gold); }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .hero-inner { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
+      .hero-desc { max-width: 100%; margin-left: auto; margin-right: auto; }
+      .hero-ctas { justify-content: center; }
+      .hero-stats-row { justify-content: center; }
+      .hero-visual { order: -1; }
+      .hero-orb { width: 320px; height: 320px; }
+      .hero-orb-core { width: 230px; height: 230px; }
+      .hero-float { display: none; }
+      .features-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .courses-preview { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .features-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-mark" style="overflow:hidden;padding:0;"><img src="https://instagram.fsdu11-1.fna.fbcdn.net/v/t51.2885-19/243308512_251774820204275_1333009198180719434_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fsdu11-1.fna.fbcdn.net&_nc_cat=111&_nc_oc=Q6cZ2gEoeSY0DnivzHw8weyAAL0ll6yfaCpP_J-ie4eqvtORTB3bsoOYHKbfQmWtKliEkR1HU8nZ8rcP1Hnhj6mTdpH6&_nc_ohc=cOQhf9rjRAIQ7kNvwF5UWLv&_nc_gid=ziW70lyY0aDgaYWGtsMFhQ&edm=AP4sbd4BAAAA&ccb=7-5&oh=00_Af6I27ENZOckmIqASq8HbkyHNaDdkwYb5V3_jID2QA3lCA&oe=6A1E6561&_nc_sid=7a9f4b" alt="Arena RP" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" onerror="this.style.display='none'"/></div>
+      <span>Arena <span>RP</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html" class="active">Início</a>
+      <a href="sobre.html">Sobre</a>
+      <a href="cursos.html">Cursos</a>
+      <a href="festival.html">Festival</a>
+      <a href="polos.html">Polos</a>
+      <a href="contato.html">Contato</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="contato.html" class="btn btn-primary btn-sm">Matricule-se</a>
+      <button class="nav-burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE OVERLAY -->
+<div class="nav-overlay" id="nav-overlay">
+  <a href="index.html">Início</a>
+  <a href="sobre.html">Sobre</a>
+  <a href="cursos.html">Cursos</a>
+  <a href="festival.html">Festival</a>
+  <a href="polos.html">Polos</a>
+  <a href="contato.html">Contato</a>
+  <a href="contato.html" class="btn btn-primary btn-lg">Matricule-se agora</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="particles"></canvas>
+  <div class="hero-radial"></div>
+  <div class="hero-grid"></div>
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-eyebrow">⭐ Escola verificada no Instagram · 5.890 seguidores</div>
+        <h1 class="hero-title">
+          Sua <em>paixão</em><br/>
+          por <span>música</span><br/>
+          vira arte aqui
+        </h1>
+        <p class="hero-desc">
+          Aulas de música para todas as idades, a partir dos 3 anos.
+          Dois polos no Rio de Janeiro, professores especializados e
+          método que já revelou talentos famosos.
+        </p>
+        <div class="hero-ctas">
+          <a href="https://wa.me/5521991755665" target="_blank" class="btn btn-primary btn-lg">
+            💬 Quero me matricular
+          </a>
+          <a href="cursos.html" class="btn btn-glass btn-lg">Ver cursos →</a>
+        </div>
+        <div class="hero-stats-row">
+          <div>
+            <div class="hero-stat-n"><span data-count="500" data-suffix="+">0+</span></div>
+            <div class="hero-stat-l">Alunos formados</div>
+          </div>
+          <div>
+            <div class="hero-stat-n">2</div>
+            <div class="hero-stat-l">Unidades no RJ</div>
+          </div>
+          <div>
+            <div class="hero-stat-n"><span data-count="15" data-suffix="+">0+</span></div>
+            <div class="hero-stat-l">Anos de experiência</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-orb">
+          <div class="hero-orb-ring"></div>
+          <div class="hero-orb-ring2"></div>
+          <div class="hero-orb-core">
+            <div class="hero-orb-icon">🎼</div>
+            <div class="hero-orb-label">
+              <div class="top">Escola de</div>
+              <div class="main">MÚSICA</div>
+              <div class="sub">Arena RP</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-float f1">
+          <div class="hero-float-icon">🎤</div>
+          <div>
+            <div style="font-size:.8rem;font-weight:700">Aulas de Canto</div>
+            <div style="font-size:.7rem;color:var(--gray2)">Todas as idades</div>
+          </div>
+        </div>
+        <div class="hero-float f2">
+          <div class="hero-float-icon">🏆</div>
+          <div>
+            <div style="font-size:.8rem;font-weight:700">Arena Festival</div>
+            <div style="font-size:.7rem;color:var(--gray2)">Mostre seu talento</div>
+          </div>
+        </div>
+        <div class="hero-float f3">
+          <div class="hero-float-icon neon">📍</div>
+          <div>
+            <div style="font-size:.8rem;font-weight:700">2 Polos no RJ</div>
+            <div style="font-size:.7rem;color:var(--gray2)">Bangu · Ilha do Gov.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item"><span class="marquee-dot"></span>Aulas de Canto</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Violão & Guitarra</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Bateria</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Piano & Teclado</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Musicalização Infantil</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Violino</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Arena Festival</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Alunos Famosos</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Polo Bangu</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Polo Ilha do Governador</span>
+    <!-- duplicar para loop infinito -->
+    <span class="marquee-item"><span class="marquee-dot"></span>Aulas de Canto</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Violão & Guitarra</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Bateria</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Piano & Teclado</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Musicalização Infantil</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Violino</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Arena Festival</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Alunos Famosos</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Polo Bangu</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Polo Ilha do Governador</span>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="section">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="s-eyebrow">Por que nos escolher</div>
+      <h2 class="s-title">O que faz a Arena RP<br/><span>diferente</span></h2>
+      <p class="s-sub">Não somos apenas uma escola de música. Somos um ecossistema completo de formação artística.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card fade-up fade-up-d1">
+        <div class="feature-icon-wrap">👶</div>
+        <div class="feature-title">Desde os 3 anos</div>
+        <div class="feature-desc">Musicalização infantil com método lúdico desenvolvido especialmente para crianças pequenas. Aprendizado através de brincadeiras e música.</div>
+        <a href="cursos.html" class="feature-link">Ver cursos →</a>
+      </div>
+      <div class="feature-card fade-up fade-up-d2">
+        <div class="feature-icon-wrap">🎓</div>
+        <div class="feature-title">Professores Especializados</div>
+        <div class="feature-desc">Nossa equipe é formada por músicos profissionais com experiência em palco e em ensino. Cada professor é apaixonado pelo que faz.</div>
+        <a href="sobre.html" class="feature-link">Conhecer equipe →</a>
+      </div>
+      <div class="feature-card fade-up fade-up-d3">
+        <div class="feature-icon-wrap">🏟️</div>
+        <div class="feature-title">Estrutura Completa</div>
+        <div class="feature-desc">Salas climatizadas e insonorizadas, equipamentos de ponta, estúdio de gravação e espaços preparados para recitais.</div>
+        <a href="polos.html" class="feature-link">Ver polos →</a>
+      </div>
+      <div class="feature-card fade-up fade-up-d1">
+        <div class="feature-icon-wrap">🌟</div>
+        <div class="feature-title">Alunos Famosos</div>
+        <div class="feature-desc">Já revelamos vários talentos que seguem carreira musical profissional. A Arena RP é o trampolim para seu sucesso.</div>
+        <a href="sobre.html" class="feature-link">Ver histórias →</a>
+      </div>
+      <div class="feature-card fade-up fade-up-d2">
+        <div class="feature-icon-wrap">🎪</div>
+        <div class="feature-title">Arena Festival</div>
+        <div class="feature-desc">Evento exclusivo para nossos alunos se apresentarem ao vivo em palco profissional. Uma experiência única de performance.</div>
+        <a href="festival.html" class="feature-link">Sobre o festival →</a>
+      </div>
+      <div class="feature-card fade-up fade-up-d3">
+        <div class="feature-icon-wrap">📱</div>
+        <div class="feature-title">Material Online</div>
+        <div class="feature-desc">Acesso a material digital de preparação vocal, exercícios e conteúdo exclusivo para complementar suas aulas presenciais.</div>
+        <a href="cursos.html" class="feature-link">Saiba mais →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- COURSES PREVIEW -->
+<section class="section">
+  <div class="container">
+    <div class="section-header centered fade-up">
+      <div class="s-eyebrow">O que ensinamos</div>
+      <h2 class="s-title">Nossos <span>Cursos</span></h2>
+      <p class="s-sub">Escolha o instrumento que desperta sua paixão. Do zero ao palco.</p>
+    </div>
+    <div class="courses-preview fade-up fade-up-d1">
+      <a href="cursos.html" class="cp-card">
+        <div class="cp-icon">🎤</div>
+        <div class="cp-name">Canto</div>
+        <div class="cp-sub">Técnica vocal completa</div>
+      </a>
+      <a href="cursos.html" class="cp-card">
+        <div class="cp-icon">🎸</div>
+        <div class="cp-name">Violão & Guitarra</div>
+        <div class="cp-sub">Todos os estilos</div>
+      </a>
+      <a href="cursos.html" class="cp-card">
+        <div class="cp-icon">🥁</div>
+        <div class="cp-name">Bateria</div>
+        <div class="cp-sub">Ritmo e performance</div>
+      </a>
+      <a href="cursos.html" class="cp-card">
+        <div class="cp-icon">🎹</div>
+        <div class="cp-name">Piano & Teclado</div>
+        <div class="cp-sub">Teoria e prática</div>
+      </a>
+      <a href="cursos.html" class="cp-card">
+        <div class="cp-icon">🎵</div>
+        <div class="cp-name">Musicalização</div>
+        <div class="cp-sub">A partir dos 3 anos</div>
+      </a>
+      <a href="cursos.html" class="cp-card">
+        <div class="cp-icon">🎻</div>
+        <div class="cp-name">Violino</div>
+        <div class="cp-sub">Cordas clássicas</div>
+      </a>
+      <a href="cursos.html" class="cp-card">
+        <div class="cp-icon">🎺</div>
+        <div class="cp-name">Sopros</div>
+        <div class="cp-sub">Flauta, sax e mais</div>
+      </a>
+      <a href="cursos.html" class="cp-card" style="border-color:rgba(255,208,0,0.25);background:var(--gold-dim)">
+        <div class="cp-icon">✨</div>
+        <div class="cp-name" style="color:var(--gold)">Ver todos</div>
+        <div class="cp-sub">+ 8 cursos disponíveis</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- STATS -->
+<section class="section-sm">
+  <div class="container">
+    <div class="stats-row fade-up">
+      <div class="stat-item">
+        <div class="stat-num"><span data-count="500" data-suffix="+">0+</span></div>
+        <div class="stat-label">Alunos formados</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">2</div>
+        <div class="stat-label">Polos no Rio</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num"><span data-count="15" data-suffix="+">0+</span></div>
+        <div class="stat-label">Anos ensinando</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num"><span data-count="8">0</span></div>
+        <div class="stat-label">Instrumentos</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num"><span data-count="5890">0</span></div>
+        <div class="stat-label">Seguidores Instagram</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CTA BANNER -->
+<section class="section">
+  <div class="container">
+    <div class="cta-banner fade-up">
+      <div class="chip chip-gold" style="margin-bottom:1.5rem">🎓 Vagas Abertas</div>
+      <h2 class="cta-banner-title">Pronto para começar sua<br/><span>jornada musical?</span></h2>
+      <p>Entre em contato agora e garanta sua vaga. Atendemos em Bangu e na Ilha do Governador.</p>
+      <div class="cta-btns">
+        <a href="https://wa.me/5521991755665" target="_blank" class="btn btn-primary btn-lg">💬 Polo Bangu</a>
+        <a href="https://wa.me/5521973818841" target="_blank" class="btn btn-glass btn-lg">💬 Polo Ilha do Gov.</a>
+        <a href="contato.html" class="btn btn-gold-outline btn-lg">Formulário de contato</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Escola de <span>Música</span> Arena RP</div>
+        <p class="footer-desc">A escola de música mais preparada e completa do Rio de Janeiro. Formando músicos e transformando vidas desde o primeiro acorde.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/escolademusicaarp/" target="_blank" class="footer-social-btn" title="Instagram">📸</a>
+          <a href="https://wa.me/5521991755665" target="_blank" class="footer-social-btn" title="WhatsApp Bangu">💬</a>
+          <a href="https://wa.me/5521973818841" target="_blank" class="footer-social-btn" title="WhatsApp Ilha">💬</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-h">Páginas</div>
+        <div class="footer-links">
+          <a href="index.html">Início</a>
+          <a href="sobre.html">Sobre a Escola</a>
+          <a href="cursos.html">Cursos</a>
+          <a href="festival.html">Arena Festival</a>
+          <a href="polos.html">Nossos Polos</a>
+          <a href="contato.html">Contato</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-h">Cursos</div>
+        <div class="footer-links">
+          <a href="cursos.html">Canto</a>
+          <a href="cursos.html">Violão & Guitarra</a>
+          <a href="cursos.html">Bateria</a>
+          <a href="cursos.html">Piano & Teclado</a>
+          <a href="cursos.html">Musicalização Infantil</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-h">Contato</div>
+        <div class="footer-links">
+          <a href="https://wa.me/5521991755665" target="_blank">📞 Bangu</a>
+          <a href="https://wa.me/5521973818841" target="_blank">📞 Ilha do Gov.</a>
+          <a href="https://www.instagram.com/escolademusicaarp/" target="_blank">📸 @escolademusicaarp</a>
+          <a href="polos.html">📍 Ver endereços</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2024 Escola de Música <span>Arena RP</span>. Todos os direitos reservados.</div>
+      <div>Feito com ❤️ para quem ama música</div>
+    </div>
+  </div>
+</footer>
+
+<!-- CHAT WIDGET -->
+<div class="chat-launcher">
+  <div class="chat-panel" id="chat-panel">
+    <div class="chat-header">
+      <div class="chat-header-left">
+        <div class="chat-avatar">🎵</div>
+        <div>
+          <div class="chat-name">Arena RP</div>
+          <div class="chat-status">Online agora</div>
+        </div>
+      </div>
+      <div class="chat-close" id="chat-close">✕</div>
+    </div>
+    <div class="chat-messages">
+      <div class="chat-msg">
+        Olá! 👋 Bem-vindo à <strong>Escola de Música Arena RP</strong>.<br/>
+        Como posso te ajudar hoje?
+      </div>
+    </div>
+    <div class="chat-options">
+      <a href="https://wa.me/5521991755665?text=Ol%C3%A1!%20Quero%20saber%20sobre%20as%20aulas%20no%20Polo%20Bangu." target="_blank" class="chat-option">
+        📍 Informações — Polo Bangu
+      </a>
+      <a href="https://wa.me/5521973818841?text=Ol%C3%A1!%20Quero%20saber%20sobre%20as%20aulas%20no%20Polo%20Ilha%20do%20Governador." target="_blank" class="chat-option">
+        📍 Informações — Polo Ilha do Gov.
+      </a>
+      <a href="contato.html" class="chat-option">
+        📝 Preencher formulário de contato
+      </a>
+      <a href="cursos.html" class="chat-option">
+        🎵 Ver cursos disponíveis
+      </a>
+    </div>
+  </div>
+  <div class="chat-btn" id="chat-toggle" title="Fale conosco">💬</div>
+</div>
+
+<script src="js/main.js"></script>
+<script>initParticles('particles');</script>
+</body>
+</html>

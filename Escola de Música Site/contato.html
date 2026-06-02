@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Contato & Matrícula — Arena RP</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    /* Contact side */
+    .contact-info-block {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      margin-bottom: 1.25rem;
+      transition: border-color var(--transition);
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .contact-info-block:hover { border-color: var(--border-g); }
+    .contact-info-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+    .contact-info-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray2); margin-bottom: 0.3rem; }
+    .contact-info-value { font-size: 1rem; font-weight: 600; margin-bottom: 0.2rem; }
+    .contact-info-sub { font-size: 0.82rem; color: var(--gray3); }
+
+    /* Polo selector */
+    .polo-selector {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+    .polo-option {
+      padding: 1.1rem 1.25rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--dark3);
+      cursor: pointer;
+      transition: all var(--transition);
+      text-align: center;
+    }
+    .polo-option input { display: none; }
+    .polo-option:has(input:checked) {
+      border-color: var(--gold);
+      background: var(--gold-dim);
+    }
+    .polo-option-name { font-size: 0.9rem; font-weight: 700; }
+    .polo-option-loc { font-size: 0.75rem; color: var(--gray2); margin-top: 0.2rem; }
+
+    /* Form card */
+    .form-card {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 3rem;
+    }
+    .form-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 900; margin-bottom: 0.5rem; }
+    .form-title span { color: var(--gold); }
+    .form-sub { font-size: 0.88rem; color: var(--gray3); margin-bottom: 2rem; line-height: 1.6; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-label { font-size: 0.78rem; font-weight: 600; color: var(--gray3); margin-bottom: 0.4rem; display: block; letter-spacing: 0.05em; }
+    select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; background-size: 16px; padding-right: 2.5rem; cursor: pointer; }
+
+    /* WhatsApp cards */
+    .wa-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .wa-card {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 1.25rem;
+      background: rgba(37,211,102,0.06);
+      border: 1px solid rgba(37,211,102,0.2);
+      border-radius: var(--radius);
+      text-decoration: none;
+      color: inherit;
+      transition: background var(--transition), border-color var(--transition), transform var(--transition);
+    }
+    .wa-card:hover { background: rgba(37,211,102,0.1); border-color: rgba(37,211,102,0.35); transform: translateY(-2px); }
+    .wa-icon {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: #25D366;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .wa-name { font-size: 0.88rem; font-weight: 700; }
+    .wa-num { font-size: 0.75rem; color: var(--gray3); }
+
+    /* FAQ */
+    .accordion-item {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 0.75rem;
+      transition: border-color var(--transition);
+    }
+    .accordion-item.open { border-color: var(--border-g); }
+    .accordion-header {
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.92rem;
+      gap: 1rem;
+    }
+    .accordion-arrow {
+      width: 24px; height: 24px;
+      border-radius: 6px;
+      background: var(--dark3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem;
+      flex-shrink: 0;
+      transition: transform var(--transition), background var(--transition);
+    }
+    .accordion-item.open .accordion-arrow {
+      transform: rotate(180deg);
+      background: var(--gold-dim);
+      color: var(--gold);
+    }
+    .accordion-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+    .accordion-item.open .accordion-body { max-height: 200px; }
+    .accordion-content { padding: 0 1.5rem 1.5rem; font-size: 0.88rem; color: var(--gray3); line-height: 1.7; }
+
+    @media (max-width:1024px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .form-card { padding: 2rem; }
+      .wa-cards { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width:480px) {
+      .form-row { grid-template-columns: 1fr; }
+      .wa-cards { grid-template-columns: 1fr; }
+      .polo-selector { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><div class="nav-logo-mark" style="overflow:hidden;padding:0;"><img src="https://instagram.fsdu11-1.fna.fbcdn.net/v/t51.2885-19/243308512_251774820204275_1333009198180719434_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fsdu11-1.fna.fbcdn.net&_nc_cat=111&_nc_oc=Q6cZ2gEoeSY0DnivzHw8weyAAL0ll6yfaCpP_J-ie4eqvtORTB3bsoOYHKbfQmWtKliEkR1HU8nZ8rcP1Hnhj6mTdpH6&_nc_ohc=cOQhf9rjRAIQ7kNvwF5UWLv&_nc_gid=ziW70lyY0aDgaYWGtsMFhQ&edm=AP4sbd4BAAAA&ccb=7-5&oh=00_Af6I27ENZOckmIqASq8HbkyHNaDdkwYb5V3_jID2QA3lCA&oe=6A1E6561&_nc_sid=7a9f4b" alt="Arena RP" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" onerror="this.style.display='none'"/></div><span>Arena <span>RP</span></span></a>
+    <nav class="nav-links">
+      <a href="index.html">Início</a><a href="sobre.html">Sobre</a><a href="cursos.html">Cursos</a>
+      <a href="festival.html">Festival</a><a href="polos.html">Polos</a><a href="contato.html" class="active">Contato</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="contato.html" class="btn btn-primary btn-sm">Matricule-se</a>
+      <button class="nav-burger" id="burger"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="nav-overlay" id="nav-overlay">
+  <a href="index.html">Início</a><a href="sobre.html">Sobre</a><a href="cursos.html">Cursos</a>
+  <a href="festival.html">Festival</a><a href="polos.html">Polos</a><a href="contato.html">Contato</a>
+  <a href="contato.html" class="btn btn-primary btn-lg">Matricule-se agora</a>
+</div>
+
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-grid"></div>
+  <div class="container">
+    <div class="page-hero-content fade-up">
+      <div class="chip chip-neon" style="margin-bottom:1rem">Fale conosco</div>
+      <h1 class="page-hero-title">Contato & <span>Matrícula</span></h1>
+      <p class="s-sub" style="margin:1rem auto 0;max-width:560px;text-align:center;">
+        Estamos aqui para te ajudar. Entre em contato pelo canal que preferir e daremos todo o suporte necessário.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<section class="section">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- LEFT: Info -->
+      <div>
+        <div class="fade-up">
+          <div class="s-eyebrow" style="margin-bottom:1.5rem">Como nos encontrar</div>
+
+          <!-- WhatsApp cards -->
+          <p style="font-size:0.78rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray2);margin-bottom:0.85rem">WhatsApp (resposta imediata)</p>
+          <div class="wa-cards">
+            <a href="https://wa.me/5521991755665?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20as%20aulas." target="_blank" class="wa-card">
+              <div class="wa-icon">💬</div>
+              <div>
+                <div class="wa-name">Polo Bangu</div>
+                <div class="wa-num">(21) 99175-5665</div>
+              </div>
+            </a>
+            <a href="https://wa.me/5521973818841?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20as%20aulas." target="_blank" class="wa-card">
+              <div class="wa-icon">💬</div>
+              <div>
+                <div class="wa-name">Polo Ilha do Gov.</div>
+                <div class="wa-num">(21) 97381-8841</div>
+              </div>
+            </a>
+          </div>
+
+          <!-- Contact info blocks -->
+          <div class="contact-info-block">
+            <div class="contact-info-icon" style="background:linear-gradient(135deg,rgba(255,208,0,0.15),rgba(255,208,0,0.05));border:1px solid rgba(255,208,0,0.2)">📍</div>
+            <div>
+              <div class="contact-info-label">Polo I</div>
+              <div class="contact-info-value">Bangu</div>
+              <div class="contact-info-sub">Rio de Janeiro — RJ · (21) 99175-5665</div>
+            </div>
+          </div>
+
+          <div class="contact-info-block">
+            <div class="contact-info-icon" style="background:linear-gradient(135deg,rgba(0,200,255,0.15),rgba(0,200,255,0.05));border:1px solid rgba(0,200,255,0.2)">📍</div>
+            <div>
+              <div class="contact-info-label">Polo II</div>
+              <div class="contact-info-value">Ilha do Governador</div>
+              <div class="contact-info-sub">Rio de Janeiro — RJ · (21) 97381-8841</div>
+            </div>
+          </div>
+
+          <div class="contact-info-block">
+            <div class="contact-info-icon" style="background:linear-gradient(135deg,rgba(255,61,107,0.12),rgba(255,61,107,0.04));border:1px solid rgba(255,61,107,0.15)">📸</div>
+            <div>
+              <div class="contact-info-label">Instagram</div>
+              <div class="contact-info-value">@escolademusicaarp</div>
+              <div class="contact-info-sub">5.890 seguidores · Conta verificada</div>
+            </div>
+          </div>
+
+          <div class="contact-info-block">
+            <div class="contact-info-icon" style="background:linear-gradient(135deg,rgba(0,255,163,0.12),rgba(0,255,163,0.04));border:1px solid rgba(0,255,163,0.15)">⏰</div>
+            <div>
+              <div class="contact-info-label">Horário de atendimento</div>
+              <div class="contact-info-value">Segunda à Sexta: 9h – 21h</div>
+              <div class="contact-info-sub">Sábados: 9h – 17h</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Form -->
+      <div class="form-card fade-up fade-up-d1">
+        <h2 class="form-title">Fale com a <span>Arena RP</span></h2>
+        <p class="form-sub">Preencha o formulário abaixo e nossa equipe entrará em contato em até 24 horas. Ou, se preferir resposta imediata, nos chame no WhatsApp!</p>
+
+        <p style="font-size:0.78rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray2);margin-bottom:0.85rem">Selecione o polo de interesse</p>
+        <div class="polo-selector">
+          <label class="polo-option">
+            <input type="radio" name="polo" value="bangu" checked>
+            <div class="polo-option-name">🏆 Polo Bangu</div>
+            <div class="polo-option-loc">Bangu · (21) 99175-5665</div>
+          </label>
+          <label class="polo-option">
+            <input type="radio" name="polo" value="ilha">
+            <div class="polo-option-name">🌊 Polo Ilha do Gov.</div>
+            <div class="polo-option-loc">Ilha do Gov. · (21) 97381-8841</div>
+          </label>
+        </div>
+
+        <form id="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Nome completo *</label>
+              <input type="text" placeholder="Seu nome" required/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Telefone / WhatsApp *</label>
+              <input type="tel" placeholder="(21) 99999-9999" required/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">E-mail</label>
+            <input type="email" placeholder="seu@email.com"/>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Curso de interesse *</label>
+              <select required>
+                <option value="">Selecione um curso</option>
+                <option>Canto</option>
+                <option>Violão & Guitarra</option>
+                <option>Bateria</option>
+                <option>Piano & Teclado</option>
+                <option>Violino</option>
+                <option>Sopros</option>
+                <option>Musicalização Infantil</option>
+                <option>Teoria Musical</option>
+                <option>Material Online Vocal</option>
+                <option>Não sei ainda</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Faixa etária</label>
+              <select>
+                <option value="">Selecione</option>
+                <option>3 – 7 anos</option>
+                <option>8 – 12 anos</option>
+                <option>13 – 17 anos</option>
+                <option>18 – 30 anos</option>
+                <option>31 – 50 anos</option>
+                <option>50+ anos</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Mensagem</label>
+            <textarea placeholder="Conte um pouco mais sobre o que você procura, dúvidas, etc..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg btn-full" style="margin-top:0.5rem">
+            Enviar mensagem →
+          </button>
+          <p style="font-size:0.75rem;color:var(--gray);text-align:center;margin-top:1rem">
+            Ou prefere resposta imediata? <a href="https://wa.me/5521991755665" target="_blank" style="color:var(--neon)">Chame no WhatsApp →</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1.5fr;gap:4rem;align-items:start">
+      <div class="fade-up">
+        <div class="s-eyebrow" style="margin-bottom:1rem">Dúvidas frequentes</div>
+        <h2 class="s-title">Perguntas <span>frequentes</span></h2>
+        <p class="s-sub">Reunimos as dúvidas mais comuns. Se não encontrar sua resposta, fale conosco!</p>
+        <div style="margin-top:2rem;display:flex;flex-direction:column;gap:0.75rem">
+          <a href="https://wa.me/5521991755665" target="_blank" class="btn btn-primary">Mais dúvidas? WhatsApp →</a>
+        </div>
+      </div>
+      <div class="fade-up fade-up-d1">
+        <div class="accordion-item open">
+          <div class="accordion-header">
+            A partir de que idade posso começar?
+            <span class="accordion-arrow">▾</span>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content">Oferecemos musicalização infantil a partir dos 3 anos! Nosso método é especialmente desenvolvido para crianças pequenas, com atividades lúdicas e divertidas que estimulam o desenvolvimento musical e cognitivo.</div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header">
+            Preciso ter experiência prévia com música?
+            <span class="accordion-arrow">▾</span>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content">Não! Nossos cursos são estruturados para atender desde quem nunca tocou um instrumento até alunos avançados. Basta ter vontade de aprender e nos deixar fazer o restante.</div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header">
+            Como funcionam as aulas?
+            <span class="accordion-arrow">▾</span>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content">As aulas são individuais ou em pequenos grupos, com duração de 40 a 60 minutos, uma vez por semana. O professor desenvolve um plano personalizado para cada aluno com base nos seus objetivos e nível.</div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header">
+            Como faço para me matricular?
+            <span class="accordion-arrow">▾</span>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content">É simples! Entre em contato pelo WhatsApp ou pelo formulário desta página, escolha o polo mais próximo e agende uma visita ou aula experimental. Nossa equipe vai te guiar em todo o processo.</div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header">
+            Quais instrumentos estão disponíveis?
+            <span class="accordion-arrow">▾</span>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content">Oferecemos: Canto, Violão, Guitarra, Bateria, Piano, Teclado, Violino, Viola, Flauta, Saxofone, Trompete, Musicalização Infantil e Teoria Musical. Entre em contato para confirmar a disponibilidade no seu polo.</div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header">
+            O que é o Arena Festival?
+            <span class="accordion-arrow">▾</span>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content">O Arena Festival é o evento anual exclusivo para nossos alunos se apresentarem em palco profissional. Com iluminação, som de qualidade e plateia, é uma experiência inesquecível que celebra o talento e o progresso de cada aluno.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Escola de <span>Música</span> Arena RP</div>
+        <p class="footer-desc">A escola de música mais preparada e completa do Rio de Janeiro.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/escolademusicaarp/" target="_blank" class="footer-social-btn">📸</a>
+          <a href="https://wa.me/5521991755665" target="_blank" class="footer-social-btn">💬</a>
+          <a href="https://wa.me/5521973818841" target="_blank" class="footer-social-btn">💬</a>
+        </div>
+      </div>
+      <div><div class="footer-col-h">Páginas</div><div class="footer-links"><a href="index.html">Início</a><a href="sobre.html">Sobre</a><a href="cursos.html">Cursos</a><a href="festival.html">Festival</a><a href="polos.html">Polos</a><a href="contato.html">Contato</a></div></div>
+      <div><div class="footer-col-h">Cursos</div><div class="footer-links"><a href="cursos.html">Canto</a><a href="cursos.html">Violão & Guitarra</a><a href="cursos.html">Bateria</a><a href="cursos.html">Piano</a><a href="cursos.html">Musicalização</a></div></div>
+      <div><div class="footer-col-h">Contato</div><div class="footer-links"><a href="https://wa.me/5521991755665" target="_blank">📞 Bangu</a><a href="https://wa.me/5521973818841" target="_blank">📞 Ilha do Gov.</a><a href="https://www.instagram.com/escolademusicaarp/" target="_blank">📸 Instagram</a></div></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2024 Escola de Música <span>Arena RP</span>. Todos os direitos reservados.</div>
+      <div>Feito com ❤️ para quem ama música</div>
+    </div>
+  </div>
+</footer>
+
+<div class="chat-launcher">
+  <div class="chat-panel" id="chat-panel">
+    <div class="chat-header">
+      <div class="chat-header-left"><div class="chat-avatar">🎵</div><div><div class="chat-name">Arena RP</div><div class="chat-status">Online agora</div></div></div>
+      <div class="chat-close" id="chat-close">✕</div>
+    </div>
+    <div class="chat-messages"><div class="chat-msg">Como posso te ajudar com sua matrícula? 🎓</div></div>
+    <div class="chat-options">
+      <a href="https://wa.me/5521991755665?text=Ol%C3%A1!%20Quero%20me%20matricular%20no%20Polo%20Bangu." target="_blank" class="chat-option">🏆 Matricular — Polo Bangu</a>
+      <a href="https://wa.me/5521973818841?text=Ol%C3%A1!%20Quero%20me%20matricular%20no%20Polo%20Ilha%20do%20Governador." target="_blank" class="chat-option">🌊 Matricular — Polo Ilha do Gov.</a>
+      <a href="cursos.html" class="chat-option">🎵 Ver cursos disponíveis</a>
+    </div>
+  </div>
+  <div class="chat-btn" id="chat-toggle">💬</div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
