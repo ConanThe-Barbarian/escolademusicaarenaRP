@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Sobre a Escola — Arena RP</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    /* ── TIMELINE ─────────────────────────────── */
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--gold), rgba(255,208,0,0.1));
+    }
+    .tl-item {
+      position: relative;
+      padding-bottom: 3rem;
+    }
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -2.37rem; top: 0.2rem;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 3px solid var(--black);
+      box-shadow: 0 0 10px rgba(255,208,0,0.5);
+    }
+    .tl-year {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+    .tl-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .tl-desc { font-size: 0.88rem; color: var(--gray3); line-height: 1.65; }
+
+    /* Values */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .value-card {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      text-align: center;
+      transition: transform var(--transition), border-color var(--transition);
+    }
+    .value-card:hover { transform: translateY(-4px); border-color: var(--border-g); }
+    .value-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .value-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .value-desc { font-size: 0.82rem; color: var(--gray3); line-height: 1.6; }
+
+    /* Team */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+    .team-card {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: transform var(--transition), border-color var(--transition);
+      position: relative;
+    }
+    .team-card:hover { transform: translateY(-6px); border-color: var(--border-g); }
+    .team-avatar {
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .team-avatar-bg {
+      position: absolute; inset: 0;
+      opacity: 0.7;
+    }
+    .team-body { padding: 1.25rem; }
+    .team-name { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.2rem; }
+    .team-role { font-size: 0.75rem; color: var(--gold); font-weight: 600; margin-bottom: 0.5rem; }
+    .team-desc { font-size: 0.78rem; color: var(--gray3); line-height: 1.55; }
+
+    /* Manifesto */
+    .manifesto {
+      background: linear-gradient(135deg, rgba(255,208,0,0.06), rgba(0,255,163,0.03));
+      border: 1px solid rgba(255,208,0,0.12);
+      border-radius: var(--radius-xl);
+      padding: 5rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .manifesto::before {
+      content: '"';
+      position: absolute;
+      font-family: 'Playfair Display', serif;
+      font-size: 20rem;
+      color: var(--gold);
+      opacity: 0.04;
+      top: -4rem; left: 2rem;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .manifesto-text {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      font-weight: 700;
+      line-height: 1.4;
+      color: var(--white);
+      position: relative;
+    }
+    .manifesto-text span { color: var(--gold); }
+
+    @media (max-width: 1024px) {
+      .team-grid { grid-template-columns: repeat(2, 1fr); }
+      .values-grid { grid-template-columns: 1fr 1fr; }
+      .manifesto { padding: 3rem 2rem; }
+    }
+    @media (max-width: 640px) {
+      .team-grid { grid-template-columns: 1fr 1fr; }
+      .values-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 400px) {
+      .team-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-mark" style="overflow:hidden;padding:0;"><img src="https://instagram.fsdu11-1.fna.fbcdn.net/v/t51.2885-19/243308512_251774820204275_1333009198180719434_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fsdu11-1.fna.fbcdn.net&_nc_cat=111&_nc_oc=Q6cZ2gEoeSY0DnivzHw8weyAAL0ll6yfaCpP_J-ie4eqvtORTB3bsoOYHKbfQmWtKliEkR1HU8nZ8rcP1Hnhj6mTdpH6&_nc_ohc=cOQhf9rjRAIQ7kNvwF5UWLv&_nc_gid=ziW70lyY0aDgaYWGtsMFhQ&edm=AP4sbd4BAAAA&ccb=7-5&oh=00_Af6I27ENZOckmIqASq8HbkyHNaDdkwYb5V3_jID2QA3lCA&oe=6A1E6561&_nc_sid=7a9f4b" alt="Arena RP" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" onerror="this.style.display='none'"/></div>
+      <span>Arena <span>RP</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">Início</a>
+      <a href="sobre.html" class="active">Sobre</a>
+      <a href="cursos.html">Cursos</a>
+      <a href="festival.html">Festival</a>
+      <a href="polos.html">Polos</a>
+      <a href="contato.html">Contato</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="contato.html" class="btn btn-primary btn-sm">Matricule-se</a>
+      <button class="nav-burger" id="burger"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="nav-overlay" id="nav-overlay">
+  <a href="index.html">Início</a><a href="sobre.html">Sobre</a><a href="cursos.html">Cursos</a>
+  <a href="festival.html">Festival</a><a href="polos.html">Polos</a><a href="contato.html">Contato</a>
+  <a href="contato.html" class="btn btn-primary btn-lg">Matricule-se agora</a>
+</div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-grid"></div>
+  <div class="container">
+    <div class="page-hero-content fade-up">
+      <div class="chip chip-gold" style="margin-bottom:1rem">Nossa história</div>
+      <h1 class="page-hero-title">Sobre a <span>Arena RP</span></h1>
+      <p class="s-sub" style="margin:1rem auto 0;max-width:580px;text-align:center;">
+        Mais de 15 anos formando músicos, revelando talentos e transformando vidas através da música no Rio de Janeiro.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- MISSÃO / VISÃO / VALORES -->
+<section class="section">
+  <div class="container">
+    <div class="section-header centered fade-up">
+      <div class="s-eyebrow">Quem somos</div>
+      <h2 class="s-title">Nossos <span>pilares</span></h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-card fade-up fade-up-d1">
+        <div class="value-icon">🎯</div>
+        <div class="value-title">Nossa Missão</div>
+        <div class="value-desc">Democratizar o ensino musical de qualidade no Rio de Janeiro, tornando a música acessível para crianças, jovens e adultos de todas as idades.</div>
+      </div>
+      <div class="value-card fade-up fade-up-d2">
+        <div class="value-icon">🔭</div>
+        <div class="value-title">Nossa Visão</div>
+        <div class="value-desc">Ser a escola de música mais reconhecida do Rio de Janeiro, referência em formação artística, revelação de talentos e excelência no ensino.</div>
+      </div>
+      <div class="value-card fade-up fade-up-d3">
+        <div class="value-icon">💎</div>
+        <div class="value-title">Nossos Valores</div>
+        <div class="value-desc">Paixão pela música, excelência no ensino, inclusão, inovação pedagógica e comprometimento com o desenvolvimento humano de cada aluno.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HISTÓRIA / TIMELINE -->
+<section class="section">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start">
+      <div>
+        <div class="section-header fade-up">
+          <div class="s-eyebrow">Nossa trajetória</div>
+          <h2 class="s-title">Uma história de <span>paixão</span></h2>
+          <p class="s-sub">Cada etapa da nossa história foi marcada por dedicação, crescimento e muita música.</p>
+        </div>
+        <div class="timeline fade-up fade-up-d1">
+          <div class="tl-item">
+            <div class="tl-year">Os primeiros anos</div>
+            <div class="tl-title">Fundação da Arena RP</div>
+            <div class="tl-desc">A escola nasceu de um sonho: oferecer ensino musical de qualidade para a zona oeste do Rio. Com poucos alunos e muito amor pela música, tudo começou.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">Crescimento</div>
+            <div class="tl-title">Expansão do Corpo Docente</div>
+            <div class="tl-desc">Com a crescente demanda, expandimos nossa equipe de professores, trazendo músicos profissionais com experiência nacional e internacional.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">Segundo polo</div>
+            <div class="tl-title">Inauguração Ilha do Governador</div>
+            <div class="tl-desc">Para atender mais famílias cariocas, inauguramos nosso segundo polo na Ilha do Governador, levando a mesma qualidade para uma nova região.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">Hoje</div>
+            <div class="tl-title">Arena RP no Instagram</div>
+            <div class="tl-desc">Com mais de 5.800 seguidores, conta verificada e alunos famosos, a Arena RP é referência em formação musical no Rio de Janeiro.</div>
+          </div>
+        </div>
+      </div>
+      <div class="fade-up fade-up-d2">
+        <div class="manifesto">
+          <p class="manifesto-text">
+            "Acreditamos que a <span>música</span> é uma das linguagens mais poderosas do mundo — e que todo ser humano merece aprendê-la."
+          </p>
+          <div style="margin-top:2rem;font-size:0.85rem;color:var(--gray3)">— Equipe Arena RP</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.5rem">
+          <div class="value-card" style="text-align:left;padding:1.5rem">
+            <div style="font-size:1.8rem;font-weight:900;color:var(--gold);font-family:'Playfair Display',serif" data-count="500" data-suffix="+">0+</div>
+            <div style="font-size:0.78rem;color:var(--gray3);margin-top:0.2rem">Alunos formados</div>
+          </div>
+          <div class="value-card" style="text-align:left;padding:1.5rem">
+            <div style="font-size:1.8rem;font-weight:900;color:var(--gold);font-family:'Playfair Display',serif" data-count="15" data-suffix="+">0+</div>
+            <div style="font-size:0.78rem;color:var(--gray3);margin-top:0.2rem">Anos de experiência</div>
+          </div>
+          <div class="value-card" style="text-align:left;padding:1.5rem">
+            <div style="font-size:1.8rem;font-weight:900;color:var(--gold);font-family:'Playfair Display',serif">2</div>
+            <div style="font-size:0.78rem;color:var(--gray3);margin-top:0.2rem">Polos no RJ</div>
+          </div>
+          <div class="value-card" style="text-align:left;padding:1.5rem">
+            <div style="font-size:1.8rem;font-weight:900;color:var(--gold);font-family:'Playfair Display',serif" data-count="8">0</div>
+            <div style="font-size:0.78rem;color:var(--gray3);margin-top:0.2rem">Cursos disponíveis</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EQUIPE -->
+<section class="section">
+  <div class="container">
+    <div class="section-header centered fade-up">
+      <div class="s-eyebrow">Nossos professores</div>
+      <h2 class="s-title">Equipe <span>apaixonada</span> pela música</h2>
+      <p class="s-sub">Cada professor da Arena RP é um músico profissional com experiência em palco e em sala de aula.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card fade-up fade-up-d1">
+        <div class="team-avatar">
+          <div class="team-avatar-bg" style="background:linear-gradient(135deg,#FFD000,#FF6B00)"></div>
+          <span style="position:relative;z-index:1">🎤</span>
+        </div>
+        <div class="team-body">
+          <div class="team-name">Wallyson</div>
+          <div class="team-role">Professor de Canto</div>
+          <div class="team-desc">Cantor profissional com experiência nacional. Especialista em técnica vocal, interpretação e performance de palco.</div>
+        </div>
+      </div>
+      <div class="team-card fade-up fade-up-d2">
+        <div class="team-avatar">
+          <div class="team-avatar-bg" style="background:linear-gradient(135deg,#00C8FF,#0066FF)"></div>
+          <span style="position:relative;z-index:1">🎸</span>
+        </div>
+        <div class="team-body">
+          <div class="team-name">Prof. de Guitarra</div>
+          <div class="team-role">Violão & Guitarra</div>
+          <div class="team-desc">Guitarrista com domínio de múltiplos estilos: rock, samba, MPB e pop. Anos de experiência em palco e ensino.</div>
+        </div>
+      </div>
+      <div class="team-card fade-up fade-up-d3">
+        <div class="team-avatar">
+          <div class="team-avatar-bg" style="background:linear-gradient(135deg,#00FFA3,#00AA55)"></div>
+          <span style="position:relative;z-index:1">🥁</span>
+        </div>
+        <div class="team-body">
+          <div class="team-name">Prof. de Bateria</div>
+          <div class="team-role">Bateria & Percussão</div>
+          <div class="team-desc">Baterista profissional com formação clássica e contemporânea. Especialista em desenvolver coordenação e ritmo.</div>
+        </div>
+      </div>
+      <div class="team-card fade-up fade-up-d4">
+        <div class="team-avatar">
+          <div class="team-avatar-bg" style="background:linear-gradient(135deg,#AA00FF,#6600CC)"></div>
+          <span style="position:relative;z-index:1">🎹</span>
+        </div>
+        <div class="team-body">
+          <div class="team-name">Prof. de Piano</div>
+          <div class="team-role">Piano & Teoria Musical</div>
+          <div class="team-desc">Pianista clássico e contemporâneo. Especialista em teoria musical, harmonia e desenvolvimento da leitura de partitura.</div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:3rem" class="fade-up">
+      <p style="color:var(--gray3);margin-bottom:1.5rem">Quer fazer parte da nossa equipe?</p>
+      <a href="contato.html" class="btn btn-gold-outline">Trabalhe conosco</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CTA -->
+<section class="section-sm">
+  <div class="container" style="text-align:center">
+    <div class="fade-up">
+      <div class="chip chip-neon" style="margin-bottom:1.5rem">🎓 Vagas abertas</div>
+      <h2 class="s-title" style="margin-bottom:1rem">Faça parte da nossa <span>família</span></h2>
+      <p style="color:var(--gray3);margin-bottom:2rem;max-width:500px;margin-left:auto;margin-right:auto">
+        Venha conhecer a escola, fale com nossos professores e encontre o curso ideal para você.
+      </p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+        <a href="https://wa.me/5521991755665" target="_blank" class="btn btn-primary btn-lg">💬 Polo Bangu</a>
+        <a href="https://wa.me/5521973818841" target="_blank" class="btn btn-glass btn-lg">💬 Polo Ilha do Gov.</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Escola de <span>Música</span> Arena RP</div>
+        <p class="footer-desc">A escola de música mais preparada e completa do Rio de Janeiro.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/escolademusicaarp/" target="_blank" class="footer-social-btn">📸</a>
+          <a href="https://wa.me/5521991755665" target="_blank" class="footer-social-btn">💬</a>
+          <a href="https://wa.me/5521973818841" target="_blank" class="footer-social-btn">💬</a>
+        </div>
+      </div>
+      <div><div class="footer-col-h">Páginas</div><div class="footer-links"><a href="index.html">Início</a><a href="sobre.html">Sobre</a><a href="cursos.html">Cursos</a><a href="festival.html">Festival</a><a href="polos.html">Polos</a><a href="contato.html">Contato</a></div></div>
+      <div><div class="footer-col-h">Cursos</div><div class="footer-links"><a href="cursos.html">Canto</a><a href="cursos.html">Violão & Guitarra</a><a href="cursos.html">Bateria</a><a href="cursos.html">Piano</a><a href="cursos.html">Musicalização</a></div></div>
+      <div><div class="footer-col-h">Contato</div><div class="footer-links"><a href="https://wa.me/5521991755665" target="_blank">📞 Bangu</a><a href="https://wa.me/5521973818841" target="_blank">📞 Ilha do Gov.</a><a href="https://www.instagram.com/escolademusicaarp/" target="_blank">📸 Instagram</a></div></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2024 Escola de Música <span>Arena RP</span>. Todos os direitos reservados.</div>
+      <div>Feito com ❤️ para quem ama música</div>
+    </div>
+  </div>
+</footer>
+
+<!-- CHAT -->
+<div class="chat-launcher">
+  <div class="chat-panel" id="chat-panel">
+    <div class="chat-header">
+      <div class="chat-header-left"><div class="chat-avatar">🎵</div><div><div class="chat-name">Arena RP</div><div class="chat-status">Online agora</div></div></div>
+      <div class="chat-close" id="chat-close">✕</div>
+    </div>
+    <div class="chat-messages"><div class="chat-msg">Olá! 👋 Como posso te ajudar?</div></div>
+    <div class="chat-options">
+      <a href="https://wa.me/5521991755665?text=Ol%C3%A1!%20Vi%20o%20site%20e%20quero%20saber%20mais%20sobre%20as%20aulas." target="_blank" class="chat-option">📍 Polo Bangu — WhatsApp</a>
+      <a href="https://wa.me/5521973818841?text=Ol%C3%A1!%20Vi%20o%20site%20e%20quero%20saber%20mais%20sobre%20as%20aulas." target="_blank" class="chat-option">📍 Polo Ilha do Gov. — WhatsApp</a>
+      <a href="contato.html" class="chat-option">📝 Formulário de contato</a>
+    </div>
+  </div>
+  <div class="chat-btn" id="chat-toggle">💬</div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

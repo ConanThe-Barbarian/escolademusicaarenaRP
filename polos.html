@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Nossos Polos — Arena RP</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    /* Polo hero cards */
+    .polo-hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .polo-hero-card {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      position: relative;
+      min-height: 480px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      cursor: pointer;
+      transition: transform var(--transition);
+    }
+    .polo-hero-card:hover { transform: scale(1.01); }
+    .polo-hero-bg {
+      position: absolute; inset: 0;
+    }
+    .polo-hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.3) 60%, transparent 100%);
+    }
+    .polo-hero-content { position: relative; padding: 2.5rem; }
+    .polo-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      font-weight: 900;
+      opacity: 0.12;
+      position: absolute;
+      top: 1.5rem; right: 2rem;
+      line-height: 1;
+    }
+    .polo-chip { margin-bottom: 0.75rem; }
+    .polo-name { font-family:'Playfair Display',serif; font-size: 2rem; font-weight: 900; margin-bottom: 0.4rem; }
+    .polo-loc { font-size: 0.88rem; color: rgba(255,255,255,0.7); display: flex; align-items: center; gap: 0.35rem; margin-bottom: 1.5rem; }
+    .polo-quick-stats { display: flex; gap: 1.5rem; }
+    .polo-qs { text-align: center; }
+    .polo-qs-n { font-size: 1.4rem; font-weight: 800; color: var(--gold); }
+    .polo-qs-l { font-size: 0.7rem; color: rgba(255,255,255,0.6); }
+
+    /* Detail sections */
+    .polo-detail {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+    .polo-detail-header {
+      padding: 2.5rem 3rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .polo-detail-title { font-family:'Playfair Display',serif; font-size: 2rem; font-weight: 900; }
+    .polo-detail-body {
+      padding: 0 3rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2rem;
+    }
+    .polo-info-block { }
+    .polo-info-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray2); margin-bottom: 0.75rem; }
+    .polo-info-items { display: flex; flex-direction: column; gap: 0.5rem; }
+    .polo-info-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.88rem;
+      color: var(--gray3);
+      padding: 0.6rem 0.75rem;
+      background: var(--dark3);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    /* Map placeholder */
+    .map-placeholder {
+      height: 280px;
+      background: var(--dark3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      cursor: pointer;
+      transition: border-color var(--transition);
+    }
+    .map-placeholder:hover { border-color: var(--border-g); }
+    .map-placeholder-icon { font-size: 3rem; }
+    .map-placeholder-text { font-size: 0.9rem; font-weight: 600; color: var(--gray3); }
+    .map-placeholder-sub { font-size: 0.78rem; color: var(--gray); }
+
+    /* Comparison table */
+    .comparison-table {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .ct-head {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      background: var(--dark3);
+      border-bottom: 1px solid var(--border);
+    }
+    .ct-head-cell {
+      padding: 1.25rem 1.5rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-align: center;
+    }
+    .ct-head-cell:first-child { text-align: left; color: var(--gray2); }
+    .ct-row {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      border-bottom: 1px solid var(--border);
+      transition: background var(--transition);
+    }
+    .ct-row:last-child { border-bottom: none; }
+    .ct-row:hover { background: rgba(255,255,255,0.02); }
+    .ct-cell {
+      padding: 1rem 1.5rem;
+      font-size: 0.88rem;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ct-cell:first-child { text-align: left; justify-content: flex-start; color: var(--gray3); }
+    .ct-check { color: var(--neon); font-size: 1rem; }
+    .ct-cross { color: var(--gray); font-size: 0.8rem; }
+
+    @media (max-width:1024px) {
+      .polo-hero-grid { grid-template-columns: 1fr; }
+      .polo-detail-body { grid-template-columns: 1fr 1fr; }
+      .polo-hero-card { min-height: 340px; }
+    }
+    @media (max-width:640px) {
+      .polo-detail-body { grid-template-columns: 1fr; }
+      .polo-detail-header { flex-direction: column; }
+      .ct-head, .ct-row { grid-template-columns: 1.5fr 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><div class="nav-logo-mark" style="overflow:hidden;padding:0;"><img src="https://instagram.fsdu11-1.fna.fbcdn.net/v/t51.2885-19/243308512_251774820204275_1333009198180719434_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fsdu11-1.fna.fbcdn.net&_nc_cat=111&_nc_oc=Q6cZ2gEoeSY0DnivzHw8weyAAL0ll6yfaCpP_J-ie4eqvtORTB3bsoOYHKbfQmWtKliEkR1HU8nZ8rcP1Hnhj6mTdpH6&_nc_ohc=cOQhf9rjRAIQ7kNvwF5UWLv&_nc_gid=ziW70lyY0aDgaYWGtsMFhQ&edm=AP4sbd4BAAAA&ccb=7-5&oh=00_Af6I27ENZOckmIqASq8HbkyHNaDdkwYb5V3_jID2QA3lCA&oe=6A1E6561&_nc_sid=7a9f4b" alt="Arena RP" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" onerror="this.style.display='none'"/></div><span>Arena <span>RP</span></span></a>
+    <nav class="nav-links">
+      <a href="index.html">Início</a><a href="sobre.html">Sobre</a><a href="cursos.html">Cursos</a>
+      <a href="festival.html">Festival</a><a href="polos.html" class="active">Polos</a><a href="contato.html">Contato</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="contato.html" class="btn btn-primary btn-sm">Matricule-se</a>
+      <button class="nav-burger" id="burger"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="nav-overlay" id="nav-overlay">
+  <a href="index.html">Início</a><a href="sobre.html">Sobre</a><a href="cursos.html">Cursos</a>
+  <a href="festival.html">Festival</a><a href="polos.html">Polos</a><a href="contato.html">Contato</a>
+  <a href="contato.html" class="btn btn-primary btn-lg">Matricule-se agora</a>
+</div>
+
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-grid"></div>
+  <div class="container">
+    <div class="page-hero-content fade-up">
+      <div class="chip chip-gold" style="margin-bottom:1rem">Nossas unidades</div>
+      <h1 class="page-hero-title">Nossos <span>Polos</span></h1>
+      <p class="s-sub" style="margin:1rem auto 0;max-width:560px;text-align:center;">
+        Duas unidades completas no Rio de Janeiro. Encontre a mais perto de você e venha estudar música conosco.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- POLO HERO CARDS -->
+<section class="section">
+  <div class="container">
+    <div class="polo-hero-grid fade-up">
+      <!-- Polo I - Bangu -->
+      <div class="polo-hero-card">
+        <div class="polo-hero-bg" style="background:linear-gradient(135deg,#0e0e00,#1a1500)"></div>
+        <div class="polo-hero-overlay" style="background:linear-gradient(to top,rgba(0,0,0,0.97) 0%,rgba(10,10,0,0.4) 60%,transparent 100%)"></div>
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:8rem;opacity:0.06">🎵</div>
+        <div class="polo-hero-content">
+          <div class="polo-num">I</div>
+          <div class="polo-chip"><span class="chip chip-gold">Polo I</span></div>
+          <div class="polo-name">Bangu</div>
+          <div class="polo-loc">📍 Bangu, Rio de Janeiro — RJ</div>
+          <div class="polo-quick-stats">
+            <div class="polo-qs"><div class="polo-qs-n">8+</div><div class="polo-qs-l">Cursos</div></div>
+            <div class="polo-qs"><div class="polo-qs-n">5+</div><div class="polo-qs-l">Salas</div></div>
+            <div class="polo-qs"><div class="polo-qs-n">Seg–Sáb</div><div class="polo-qs-l">Funcionamento</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Polo II - Ilha do Governador -->
+      <div class="polo-hero-card">
+        <div class="polo-hero-bg" style="background:linear-gradient(135deg,#00101a,#001524)"></div>
+        <div class="polo-hero-overlay" style="background:linear-gradient(to top,rgba(0,0,0,0.97) 0%,rgba(0,10,20,0.4) 60%,transparent 100%)"></div>
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:8rem;opacity:0.06">🎼</div>
+        <div class="polo-hero-content">
+          <div class="polo-num">II</div>
+          <div class="polo-chip"><span class="chip chip-blue">Polo II</span></div>
+          <div class="polo-name">Ilha do Governador</div>
+          <div class="polo-loc">📍 Ilha do Governador, Rio de Janeiro — RJ</div>
+          <div class="polo-quick-stats">
+            <div class="polo-qs"><div class="polo-qs-n" style="color:#00C8FF">8+</div><div class="polo-qs-l">Cursos</div></div>
+            <div class="polo-qs"><div class="polo-qs-n" style="color:#00C8FF">5+</div><div class="polo-qs-l">Salas</div></div>
+            <div class="polo-qs"><div class="polo-qs-n" style="color:#00C8FF">Seg–Sáb</div><div class="polo-qs-l">Funcionamento</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- POLO I DETAIL -->
+<section class="section">
+  <div class="container">
+    <div class="s-eyebrow" style="margin-bottom:1.5rem">Polo I</div>
+    <div class="polo-detail fade-up">
+      <div class="polo-detail-header">
+        <div>
+          <div class="chip chip-gold" style="margin-bottom:0.75rem">📍 Bangu · Rio de Janeiro</div>
+          <div class="polo-detail-title">Polo I — Bangu</div>
+        </div>
+        <div style="display:flex;gap:0.85rem;flex-wrap:wrap">
+          <a href="https://wa.me/5521991755665" target="_blank" class="btn btn-primary">💬 WhatsApp Bangu</a>
+          <a href="https://maps.google.com/?q=Bangu,Rio+de+Janeiro" target="_blank" class="btn btn-glass">🗺 Ver no mapa</a>
+        </div>
+      </div>
+      <div class="polo-detail-body">
+        <div class="polo-info-block">
+          <div class="polo-info-label">Estrutura</div>
+          <div class="polo-info-items">
+            <div class="polo-info-item">🏠 Salas climatizadas</div>
+            <div class="polo-info-item">🔇 Insonorização completa</div>
+            <div class="polo-info-item">🎙 Equipamentos profissionais</div>
+            <div class="polo-info-item">🎚 Mesa de som e monitores</div>
+            <div class="polo-info-item">🪗 Sala de espera confortável</div>
+          </div>
+        </div>
+        <div class="polo-info-block">
+          <div class="polo-info-label">Horários de funcionamento</div>
+          <div class="polo-info-items">
+            <div class="polo-info-item">📅 Segunda a Sexta: 9h – 21h</div>
+            <div class="polo-info-item">📅 Sábado: 9h – 17h</div>
+            <div class="polo-info-item">📱 WhatsApp: (21) 99175-5665</div>
+            <div class="polo-info-item">📸 @escolademusicaarp</div>
+          </div>
+        </div>
+        <div class="polo-info-block">
+          <div class="polo-info-label">Localização</div>
+          <div class="map-placeholder" onclick="window.open('https://maps.google.com/?q=Bangu,Rio+de+Janeiro','_blank')">
+            <div class="map-placeholder-icon">🗺</div>
+            <div class="map-placeholder-text">Bangu, Rio de Janeiro</div>
+            <div class="map-placeholder-sub">Clique para abrir no Google Maps</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POLO II DETAIL -->
+    <div class="polo-detail fade-up fade-up-d1" style="border-color:rgba(0,200,255,0.1)">
+      <div class="polo-detail-header">
+        <div>
+          <div class="chip chip-blue" style="margin-bottom:0.75rem">📍 Ilha do Governador · Rio de Janeiro</div>
+          <div class="polo-detail-title">Polo II — Ilha do Governador</div>
+        </div>
+        <div style="display:flex;gap:0.85rem;flex-wrap:wrap">
+          <a href="https://wa.me/5521973818841" target="_blank" class="btn" style="background:linear-gradient(135deg,#00C8FF,#0088CC);color:#000;box-shadow:0 4px 20px rgba(0,200,255,0.3)">💬 WhatsApp Ilha</a>
+          <a href="https://maps.google.com/?q=Ilha+do+Governador,Rio+de+Janeiro" target="_blank" class="btn btn-glass">🗺 Ver no mapa</a>
+        </div>
+      </div>
+      <div class="polo-detail-body">
+        <div class="polo-info-block">
+          <div class="polo-info-label">Estrutura</div>
+          <div class="polo-info-items">
+            <div class="polo-info-item">🏠 Salas climatizadas</div>
+            <div class="polo-info-item">🔇 Insonorização completa</div>
+            <div class="polo-info-item">🎙 Equipamentos profissionais</div>
+            <div class="polo-info-item">🎚 Mesa de som e monitores</div>
+            <div class="polo-info-item">🪗 Sala de espera confortável</div>
+          </div>
+        </div>
+        <div class="polo-info-block">
+          <div class="polo-info-label">Horários de funcionamento</div>
+          <div class="polo-info-items">
+            <div class="polo-info-item">📅 Segunda a Sexta: 9h – 21h</div>
+            <div class="polo-info-item">📅 Sábado: 9h – 17h</div>
+            <div class="polo-info-item">📱 WhatsApp: (21) 97381-8841</div>
+            <div class="polo-info-item">📸 @escolademusicaarp</div>
+          </div>
+        </div>
+        <div class="polo-info-block">
+          <div class="polo-info-label">Localização</div>
+          <div class="map-placeholder" onclick="window.open('https://maps.google.com/?q=Ilha+do+Governador,Rio+de+Janeiro','_blank')" style="border-color:rgba(0,200,255,0.15)">
+            <div class="map-placeholder-icon">🗺</div>
+            <div class="map-placeholder-text">Ilha do Governador, RJ</div>
+            <div class="map-placeholder-sub">Clique para abrir no Google Maps</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- COMPARISON TABLE -->
+<section class="section">
+  <div class="container">
+    <div class="section-header centered fade-up">
+      <div class="s-eyebrow">Compare os polos</div>
+      <h2 class="s-title">Ambos com a <span>mesma qualidade</span></h2>
+    </div>
+    <div class="comparison-table fade-up fade-up-d1">
+      <div class="ct-head">
+        <div class="ct-head-cell">Recurso</div>
+        <div class="ct-head-cell" style="color:var(--gold)">🏆 Polo I — Bangu</div>
+        <div class="ct-head-cell" style="color:#00C8FF">🌊 Polo II — Ilha do Gov.</div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-cell">Salas climatizadas</div>
+        <div class="ct-cell"><span class="ct-check">✓</span></div>
+        <div class="ct-cell"><span class="ct-check">✓</span></div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-cell">Insonorização profissional</div>
+        <div class="ct-cell"><span class="ct-check">✓</span></div>
+        <div class="ct-cell"><span class="ct-check">✓</span></div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-cell">Equipamentos de áudio profissional</div>
+        <div class="ct-cell"><span class="ct-check">✓</span></div>
+        <div class="ct-cell"><span class="ct-check">✓</span></div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-cell">Musicalização infantil (a partir de 3 anos)</div>
+        <div class="ct-cell"><span class="ct-check">✓</span></div>
+        <div class="ct-cell"><span class="ct-check">✓</span></div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-cell">Todos os cursos disponíveis</div>
+        <div class="ct-cell"><span class="ct-check">✓</span></div>
+        <div class="ct-cell"><span class="ct-check">✓</span></div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-cell">Arena Festival</div>
+        <div class="ct-cell"><span class="ct-check">✓</span></div>
+        <div class="ct-cell"><span class="ct-check">✓</span></div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-cell">Aulas aos sábados</div>
+        <div class="ct-cell"><span class="ct-check">✓</span></div>
+        <div class="ct-cell"><span class="ct-check">✓</span></div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-cell">Material online incluso</div>
+        <div class="ct-cell"><span class="ct-check">✓</span></div>
+        <div class="ct-cell"><span class="ct-check">✓</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CTA -->
+<section class="section-sm">
+  <div class="container" style="text-align:center">
+    <div class="fade-up">
+      <h2 class="s-title" style="margin-bottom:1rem">Qual polo fica mais <span>perto de você?</span></h2>
+      <p style="color:var(--gray3);margin-bottom:2rem;max-width:500px;margin-left:auto;margin-right:auto">Entre em contato com o polo mais conveniente e agende sua aula experimental gratuita!</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+        <a href="https://wa.me/5521991755665?text=Ol%C3%A1!%20Quero%20agendar%20uma%20aula%20experimental%20no%20Polo%20Bangu." target="_blank" class="btn btn-primary btn-lg">💬 Polo Bangu</a>
+        <a href="https://wa.me/5521973818841?text=Ol%C3%A1!%20Quero%20agendar%20uma%20aula%20experimental%20no%20Polo%20Ilha%20do%20Governador." target="_blank" class="btn btn-glass btn-lg" style="border-color:rgba(0,200,255,0.3);color:#00C8FF">💬 Polo Ilha do Gov.</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Escola de <span>Música</span> Arena RP</div>
+        <p class="footer-desc">A escola de música mais preparada e completa do Rio de Janeiro.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/escolademusicaarp/" target="_blank" class="footer-social-btn">📸</a>
+          <a href="https://wa.me/5521991755665" target="_blank" class="footer-social-btn">💬</a>
+          <a href="https://wa.me/5521973818841" target="_blank" class="footer-social-btn">💬</a>
+        </div>
+      </div>
+      <div><div class="footer-col-h">Páginas</div><div class="footer-links"><a href="index.html">Início</a><a href="sobre.html">Sobre</a><a href="cursos.html">Cursos</a><a href="festival.html">Festival</a><a href="polos.html">Polos</a><a href="contato.html">Contato</a></div></div>
+      <div><div class="footer-col-h">Cursos</div><div class="footer-links"><a href="cursos.html">Canto</a><a href="cursos.html">Violão & Guitarra</a><a href="cursos.html">Bateria</a><a href="cursos.html">Piano</a><a href="cursos.html">Musicalização</a></div></div>
+      <div><div class="footer-col-h">Contato</div><div class="footer-links"><a href="https://wa.me/5521991755665" target="_blank">📞 Bangu</a><a href="https://wa.me/5521973818841" target="_blank">📞 Ilha do Gov.</a><a href="https://www.instagram.com/escolademusicaarp/" target="_blank">📸 Instagram</a></div></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2024 Escola de Música <span>Arena RP</span>. Todos os direitos reservados.</div>
+      <div>Feito com ❤️ para quem ama música</div>
+    </div>
+  </div>
+</footer>
+
+<div class="chat-launcher">
+  <div class="chat-panel" id="chat-panel">
+    <div class="chat-header">
+      <div class="chat-header-left"><div class="chat-avatar">🎵</div><div><div class="chat-name">Arena RP</div><div class="chat-status">Online agora</div></div></div>
+      <div class="chat-close" id="chat-close">✕</div>
+    </div>
+    <div class="chat-messages"><div class="chat-msg">Qual polo fica mais perto de você? 📍</div></div>
+    <div class="chat-options">
+      <a href="https://wa.me/5521991755665" target="_blank" class="chat-option">🏆 Polo Bangu — WhatsApp</a>
+      <a href="https://wa.me/5521973818841" target="_blank" class="chat-option">🌊 Polo Ilha do Gov. — WhatsApp</a>
+      <a href="contato.html" class="chat-option">📝 Formulário de contato</a>
+    </div>
+  </div>
+  <div class="chat-btn" id="chat-toggle">💬</div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

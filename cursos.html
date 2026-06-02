@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Cursos — Arena RP</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    /* Filter tabs */
+    .filter-tabs {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+    .filter-tab {
+      padding: 0.5rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      color: var(--gray3);
+      background: transparent;
+      transition: all var(--transition);
+    }
+    .filter-tab:hover { border-color: var(--border-g); color: var(--white); }
+    .filter-tab.active { background: var(--gold); color: var(--black); border-color: var(--gold); }
+
+    /* Course card premium */
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .course-card-premium {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+      position: relative;
+    }
+    .course-card-premium:hover {
+      transform: translateY(-6px);
+      border-color: var(--border-g);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+    .course-card-top {
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .course-card-top-bg {
+      position: absolute; inset: 0; opacity: 0.8;
+    }
+    .course-card-top-icon { position: relative; z-index: 1; filter: drop-shadow(0 0 20px rgba(0,0,0,0.5)); }
+    .course-badge-top {
+      position: absolute; top: 0.75rem; right: 0.75rem;
+      z-index: 2;
+    }
+    .course-body { padding: 1.5rem; }
+    .course-name-lg { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.4rem; }
+    .course-desc-lg { font-size: 0.85rem; color: var(--gray3); line-height: 1.6; margin-bottom: 1.25rem; }
+    .course-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .course-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--gray3);
+    }
+    .course-meta-item span:first-child {
+      width: 20px; height: 20px;
+      background: var(--dark3);
+      border-radius: 5px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem;
+      flex-shrink: 0;
+    }
+
+    /* Level indicator */
+    .level-bar {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 1.25rem;
+      align-items: center;
+    }
+    .level-label { font-size: 0.72rem; color: var(--gray2); margin-right: 0.5rem; }
+    .level-dot {
+      width: 28px; height: 5px;
+      border-radius: 3px;
+      background: var(--dark4);
+    }
+    .level-dot.active { background: var(--gold); }
+
+    /* Featured hero course */
+    .featured-course {
+      background: linear-gradient(135deg, rgba(255,208,0,0.08), rgba(0,255,163,0.04));
+      border: 1px solid rgba(255,208,0,0.15);
+      border-radius: var(--radius-xl);
+      padding: 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      margin-bottom: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .featured-course::before {
+      content: '🎤';
+      position: absolute;
+      font-size: 14rem;
+      opacity: 0.05;
+      right: 1rem; top: -2rem;
+      pointer-events: none;
+    }
+    .featured-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--gold);
+      color: var(--black);
+      padding: 0.35rem 0.85rem;
+      border-radius: 50px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+    .featured-title { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900; margin-bottom: 1rem; }
+    .featured-title span { color: var(--gold); }
+    .featured-desc { color: var(--gray3); line-height: 1.75; margin-bottom: 2rem; }
+    .featured-perks {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+    }
+    .featured-perk {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.88rem;
+      color: var(--gray3);
+    }
+    .featured-perk::before {
+      content: '✓';
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: rgba(255,208,0,0.15);
+      color: var(--gold);
+      font-size: 0.7rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      font-weight: 800;
+    }
+    .featured-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 280px;
+      font-size: 8rem;
+      position: relative;
+    }
+
+    /* Vocal material CTA */
+    .vocal-cta {
+      background: linear-gradient(135deg, rgba(0,255,163,0.08), rgba(0,200,255,0.04));
+      border: 1px solid rgba(0,255,163,0.15);
+      border-radius: var(--radius-xl);
+      padding: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .vocal-cta-text h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .vocal-cta-text p { color: var(--gray3); font-size: 0.9rem; }
+
+    @media (max-width: 1024px) {
+      .courses-grid { grid-template-columns: repeat(2, 1fr); }
+      .featured-course { grid-template-columns: 1fr; gap: 2rem; }
+      .featured-visual { display: none; }
+    }
+    @media (max-width: 640px) {
+      .courses-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><div class="nav-logo-mark" style="overflow:hidden;padding:0;"><img src="https://instagram.fsdu11-1.fna.fbcdn.net/v/t51.2885-19/243308512_251774820204275_1333009198180719434_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fsdu11-1.fna.fbcdn.net&_nc_cat=111&_nc_oc=Q6cZ2gEoeSY0DnivzHw8weyAAL0ll6yfaCpP_J-ie4eqvtORTB3bsoOYHKbfQmWtKliEkR1HU8nZ8rcP1Hnhj6mTdpH6&_nc_ohc=cOQhf9rjRAIQ7kNvwF5UWLv&_nc_gid=ziW70lyY0aDgaYWGtsMFhQ&edm=AP4sbd4BAAAA&ccb=7-5&oh=00_Af6I27ENZOckmIqASq8HbkyHNaDdkwYb5V3_jID2QA3lCA&oe=6A1E6561&_nc_sid=7a9f4b" alt="Arena RP" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" onerror="this.style.display='none'"/></div><span>Arena <span>RP</span></span></a>
+    <nav class="nav-links">
+      <a href="index.html">Início</a><a href="sobre.html">Sobre</a>
+      <a href="cursos.html" class="active">Cursos</a><a href="festival.html">Festival</a>
+      <a href="polos.html">Polos</a><a href="contato.html">Contato</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="contato.html" class="btn btn-primary btn-sm">Matricule-se</a>
+      <button class="nav-burger" id="burger"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="nav-overlay" id="nav-overlay">
+  <a href="index.html">Início</a><a href="sobre.html">Sobre</a><a href="cursos.html">Cursos</a>
+  <a href="festival.html">Festival</a><a href="polos.html">Polos</a><a href="contato.html">Contato</a>
+  <a href="contato.html" class="btn btn-primary btn-lg">Matricule-se agora</a>
+</div>
+
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-grid"></div>
+  <div class="container">
+    <div class="page-hero-content fade-up">
+      <div class="chip chip-gold" style="margin-bottom:1rem">O que ensinamos</div>
+      <h1 class="page-hero-title">Nossos <span>Cursos</span></h1>
+      <p class="s-sub" style="margin:1rem auto 0;max-width:560px;text-align:center;">
+        Mais de 8 cursos disponíveis para todas as idades e níveis. Do zero ao palco, temos o caminho certo para você.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<section class="section">
+  <div class="container">
+
+    <!-- Destaque: Canto -->
+    <div class="featured-course fade-up">
+      <div>
+        <div class="featured-tag">⭐ Mais popular</div>
+        <h2 class="featured-title">Aulas de <span>Canto</span></h2>
+        <p class="featured-desc">
+          O curso de canto da Arena RP é o mais completo do Rio de Janeiro. Trabalhamos técnica vocal, afinação, respiração, interpretação e performance de palco.
+        </p>
+        <div class="featured-perks">
+          <div class="featured-perk">Técnica vocal profissional e respiração diafragmática</div>
+          <div class="featured-perk">Afinação, dicção e expressão musical</div>
+          <div class="featured-perk">Repertório personalizado para cada aluno</div>
+          <div class="featured-perk">Preparação para shows, audições e festivais</div>
+          <div class="featured-perk">Material online de preparação vocal incluso</div>
+        </div>
+        <div style="display:flex;gap:0.85rem;flex-wrap:wrap">
+          <a href="https://wa.me/5521991755665?text=Ol%C3%A1!%20Quero%20me%20matricular%20no%20curso%20de%20Canto." target="_blank" class="btn btn-primary">Matricular agora</a>
+          <a href="contato.html" class="btn btn-glass">Mais informações</a>
+        </div>
+      </div>
+      <div class="featured-visual">🎤</div>
+    </div>
+
+    <!-- Filtros -->
+    <div class="fade-up">
+      <div class="filter-tabs" id="filter-tabs">
+        <button class="filter-tab active" data-filter="all">Todos os cursos</button>
+        <button class="filter-tab" data-filter="instrumento">Instrumentos</button>
+        <button class="filter-tab" data-filter="vocal">Vocal</button>
+        <button class="filter-tab" data-filter="infantil">Infantil</button>
+        <button class="filter-tab" data-filter="online">Online</button>
+      </div>
+    </div>
+
+    <!-- Grid de cursos -->
+    <div class="courses-grid" id="courses-grid">
+
+      <div class="course-card-premium fade-up fade-up-d1" data-category="instrumento">
+        <div class="course-card-top">
+          <div class="course-card-top-bg" style="background:linear-gradient(135deg,#1a1200,#2a1e00)"></div>
+          <div class="course-card-top-icon">🎸</div>
+        </div>
+        <div class="course-body">
+          <div class="course-name-lg">Violão & Guitarra</div>
+          <div class="course-desc-lg">Aprenda desde o básico até técnicas avançadas. Todos os estilos: MPB, rock, samba, pop e muito mais.</div>
+          <div class="course-meta">
+            <div class="course-meta-item"><span>👶</span>A partir dos 6 anos</div>
+            <div class="course-meta-item"><span>⏱</span>Aulas semanais de 50 min</div>
+            <div class="course-meta-item"><span>📍</span>Bangu e Ilha do Gov.</div>
+          </div>
+          <div class="level-bar">
+            <div class="level-label">Nível:</div>
+            <div class="level-dot active"></div>
+            <div class="level-dot active"></div>
+            <div class="level-dot active"></div>
+            <div class="level-dot"></div>
+            <div class="level-dot"></div>
+            <div style="font-size:.72rem;color:var(--gray2);margin-left:.4rem">Todos os níveis</div>
+          </div>
+          <a href="https://wa.me/5521991755665?text=Ol%C3%A1!%20Quero%20me%20matricular%20em%20Viol%C3%A3o%2FGuitarra." target="_blank" class="btn btn-primary btn-sm btn-full">Quero me matricular</a>
+        </div>
+      </div>
+
+      <div class="course-card-premium fade-up fade-up-d2" data-category="instrumento">
+        <div class="course-card-top">
+          <div class="course-card-top-bg" style="background:linear-gradient(135deg,#0d0d1a,#1a1030)"></div>
+          <div class="course-card-top-icon">🥁</div>
+        </div>
+        <div class="course-body">
+          <div class="course-name-lg">Bateria</div>
+          <div class="course-desc-lg">Desenvolva coordenação, ritmo e técnica. Do iniciante ao avançado, com foco em diferentes gêneros musicais.</div>
+          <div class="course-meta">
+            <div class="course-meta-item"><span>👶</span>A partir dos 7 anos</div>
+            <div class="course-meta-item"><span>⏱</span>Aulas semanais de 50 min</div>
+            <div class="course-meta-item"><span>📍</span>Bangu e Ilha do Gov.</div>
+          </div>
+          <div class="level-bar">
+            <div class="level-label">Nível:</div>
+            <div class="level-dot active"></div>
+            <div class="level-dot active"></div>
+            <div class="level-dot active"></div>
+            <div class="level-dot"></div>
+            <div class="level-dot"></div>
+            <div style="font-size:.72rem;color:var(--gray2);margin-left:.4rem">Todos os níveis</div>
+          </div>
+          <a href="https://wa.me/5521991755665?text=Ol%C3%A1!%20Quero%20me%20matricular%20em%20Bateria." target="_blank" class="btn btn-primary btn-sm btn-full">Quero me matricular</a>
+        </div>
+      </div>
+
+      <div class="course-card-premium fade-up fade-up-d3" data-category="instrumento">
+        <div class="course-card-top">
+          <div class="course-card-top-bg" style="background:linear-gradient(135deg,#1a0d1a,#2a0a2a)"></div>
+          <div class="course-card-top-icon">🎹</div>
+        </div>
+        <div class="course-body">
+          <div class="course-name-lg">Piano & Teclado</div>
+          <div class="course-desc-lg">Teoria musical, harmonia e técnica pianística. Desenvolva leitura de partitura e improviso com método completo.</div>
+          <div class="course-meta">
+            <div class="course-meta-item"><span>👶</span>A partir dos 5 anos</div>
+            <div class="course-meta-item"><span>⏱</span>Aulas semanais de 50 min</div>
+            <div class="course-meta-item"><span>📍</span>Bangu e Ilha do Gov.</div>
+          </div>
+          <div class="level-bar">
+            <div class="level-label">Nível:</div>
+            <div class="level-dot active"></div>
+            <div class="level-dot active"></div>
+            <div class="level-dot active"></div>
+            <div class="level-dot active"></div>
+            <div class="level-dot"></div>
+            <div style="font-size:.72rem;color:var(--gray2);margin-left:.4rem">Iniciante ao avançado</div>
+          </div>
+          <a href="https://wa.me/5521991755665?text=Ol%C3%A1!%20Quero%20me%20matricular%20em%20Piano%2FTeclado." target="_blank" class="btn btn-primary btn-sm btn-full">Quero me matricular</a>
+        </div>
+      </div>
+
+      <div class="course-card-premium fade-up fade-up-d1" data-category="instrumento">
+        <div class="course-card-top">
+          <div class="course-card-top-bg" style="background:linear-gradient(135deg,#001a0d,#002a14)"></div>
+          <div class="course-card-top-icon">🎻</div>
+        </div>
+        <div class="course-body">
+          <div class="course-name-lg">Violino & Viola</div>
+          <div class="course-desc-lg">Cordas clássicas com professores especializados. Método tradicional adaptado ao ritmo de cada aluno.</div>
+          <div class="course-meta">
+            <div class="course-meta-item"><span>👶</span>A partir dos 6 anos</div>
+            <div class="course-meta-item"><span>⏱</span>Aulas semanais de 50 min</div>
+            <div class="course-meta-item"><span>📍</span>Bangu e Ilha do Gov.</div>
+          </div>
+          <div class="level-bar">
+            <div class="level-label">Nível:</div>
+            <div class="level-dot active"></div>
+            <div class="level-dot active"></div>
+            <div class="level-dot"></div>
+            <div class="level-dot"></div>
+            <div class="level-dot"></div>
+            <div style="font-size:.72rem;color:var(--gray2);margin-left:.4rem">Iniciante ao intermediário</div>
+          </div>
+          <a href="https://wa.me/5521991755665?text=Ol%C3%A1!%20Quero%20me%20matricular%20em%20Violino." target="_blank" class="btn btn-primary btn-sm btn-full">Quero me matricular</a>
+        </div>
+      </div>
+
+      <div class="course-card-premium fade-up fade-up-d2" data-category="instrumento">
+        <div class="course-card-top">
+          <div class="course-card-top-bg" style="background:linear-gradient(135deg,#001a1a,#002a2a)"></div>
+          <div class="course-card-top-icon">🎺</div>
+          <div class="course-badge-top"><span class="chip chip-blue">Novo</span></div>
+        </div>
+        <div class="course-body">
+          <div class="course-name-lg">Sopros</div>
+          <div class="course-desc-lg">Flauta, saxofone, trompete e mais. Técnica de sopro, respiração e musicalidade com professores especializados.</div>
+          <div class="course-meta">
+            <div class="course-meta-item"><span>👶</span>A partir dos 8 anos</div>
+            <div class="course-meta-item"><span>⏱</span>Aulas semanais de 50 min</div>
+            <div class="course-meta-item"><span>📍</span>Bangu e Ilha do Gov.</div>
+          </div>
+          <div class="level-bar">
+            <div class="level-label">Nível:</div>
+            <div class="level-dot active"></div>
+            <div class="level-dot active"></div>
+            <div class="level-dot"></div>
+            <div class="level-dot"></div>
+            <div class="level-dot"></div>
+            <div style="font-size:.72rem;color:var(--gray2);margin-left:.4rem">Iniciante ao intermediário</div>
+          </div>
+          <a href="https://wa.me/5521991755665?text=Ol%C3%A1!%20Quero%20me%20matricular%20em%20Sopros." target="_blank" class="btn btn-primary btn-sm btn-full">Quero me matricular</a>
+        </div>
+      </div>
+
+      <div class="course-card-premium fade-up fade-up-d3" data-category="vocal">
+        <div class="course-card-top">
+          <div class="course-card-top-bg" style="background:linear-gradient(135deg,#1a0800,#2a1000)"></div>
+          <div class="course-card-top-icon">🎙️</div>
+        </div>
+        <div class="course-body">
+          <div class="course-name-lg">Canto — Intermediário/Avançado</div>
+          <div class="course-desc-lg">Para quem já canta e quer aprimorar. Técnicas avançadas, preparação para audições e desenvolvimento artístico completo.</div>
+          <div class="course-meta">
+            <div class="course-meta-item"><span>🎤</span>Pré-requisito: Nível básico</div>
+            <div class="course-meta-item"><span>⏱</span>Aulas semanais de 60 min</div>
+            <div class="course-meta-item"><span>📍</span>Bangu e Ilha do Gov.</div>
+          </div>
+          <div class="level-bar">
+            <div class="level-label">Nível:</div>
+            <div class="level-dot active"></div>
+            <div class="level-dot active"></div>
+            <div class="level-dot active"></div>
+            <div class="level-dot active"></div>
+            <div class="level-dot active"></div>
+            <div style="font-size:.72rem;color:var(--gray2);margin-left:.4rem">Intermediário/Avançado</div>
+          </div>
+          <a href="https://wa.me/5521991755665?text=Ol%C3%A1!%20Quero%20informações%20sobre%20o%20curso%20avançado%20de%20Canto." target="_blank" class="btn btn-primary btn-sm btn-full">Quero me matricular</a>
+        </div>
+      </div>
+
+      <div class="course-card-premium fade-up fade-up-d1" data-category="infantil">
+        <div class="course-card-top">
+          <div class="course-card-top-bg" style="background:linear-gradient(135deg,#1a1a00,#2a2a00)"></div>
+          <div class="course-card-top-icon">🎵</div>
+          <div class="course-badge-top"><span class="chip chip-neon">Popular</span></div>
+        </div>
+        <div class="course-body">
+          <div class="course-name-lg">Musicalização Infantil</div>
+          <div class="course-desc-lg">Método lúdico e divertido para crianças a partir dos 3 anos. Desenvolvimento musical, motor e cognitivo através da música.</div>
+          <div class="course-meta">
+            <div class="course-meta-item"><span>👶</span>A partir dos 3 anos</div>
+            <div class="course-meta-item"><span>⏱</span>Aulas semanais de 40 min</div>
+            <div class="course-meta-item"><span>🎭</span>Turmas reduzidas</div>
+          </div>
+          <div class="level-bar">
+            <div class="level-label">Nível:</div>
+            <div class="level-dot active"></div>
+            <div class="level-dot"></div>
+            <div class="level-dot"></div>
+            <div class="level-dot"></div>
+            <div class="level-dot"></div>
+            <div style="font-size:.72rem;color:var(--gray2);margin-left:.4rem">Iniciante</div>
+          </div>
+          <a href="https://wa.me/5521991755665?text=Ol%C3%A1!%20Quero%20matricular%20meu%20filho%20na%20musicaliza%C3%A7%C3%A3o%20infantil." target="_blank" class="btn btn-primary btn-sm btn-full">Matricular agora</a>
+        </div>
+      </div>
+
+      <div class="course-card-premium fade-up fade-up-d2" data-category="online">
+        <div class="course-card-top">
+          <div class="course-card-top-bg" style="background:linear-gradient(135deg,#00141a,#001a22)"></div>
+          <div class="course-card-top-icon">📱</div>
+          <div class="course-badge-top"><span class="chip chip-blue">Online</span></div>
+        </div>
+        <div class="course-body">
+          <div class="course-name-lg">Preparação Vocal Online</div>
+          <div class="course-desc-lg">Material digital exclusivo para preparar sua voz. Exercícios, técnicas e conteúdo complementar acessível 24h por dia.</div>
+          <div class="course-meta">
+            <div class="course-meta-item"><span>🌐</span>Acesso online 24/7</div>
+            <div class="course-meta-item"><span>📚</span>Material exclusivo Arena RP</div>
+            <div class="course-meta-item"><span>📱</span>Celular, tablet ou computador</div>
+          </div>
+          <div class="level-bar">
+            <div class="level-label">Nível:</div>
+            <div class="level-dot active"></div>
+            <div class="level-dot active"></div>
+            <div class="level-dot active"></div>
+            <div class="level-dot"></div>
+            <div class="level-dot"></div>
+            <div style="font-size:.72rem;color:var(--gray2);margin-left:.4rem">Todos os níveis</div>
+          </div>
+          <a href="https://wa.me/5521991755665?text=Ol%C3%A1!%20Quero%20acessar%20o%20Material%20de%20Prepara%C3%A7%C3%A3o%20Vocal%20Online." target="_blank" class="btn btn-neon btn-sm btn-full">Quero o material online</a>
+        </div>
+      </div>
+
+      <div class="course-card-premium fade-up fade-up-d3" data-category="infantil instrumento">
+        <div class="course-card-top">
+          <div class="course-card-top-bg" style="background:linear-gradient(135deg,#1a001a,#220022)"></div>
+          <div class="course-card-top-icon">🎶</div>
+        </div>
+        <div class="course-body">
+          <div class="course-name-lg">Teoria Musical</div>
+          <div class="course-desc-lg">Fundamentos da música: leitura de partitura, solfejo, harmonia e composição. Para complementar qualquer instrumento.</div>
+          <div class="course-meta">
+            <div class="course-meta-item"><span>👶</span>A partir dos 8 anos</div>
+            <div class="course-meta-item"><span>⏱</span>Aulas semanais de 50 min</div>
+            <div class="course-meta-item"><span>📍</span>Bangu e Ilha do Gov.</div>
+          </div>
+          <div class="level-bar">
+            <div class="level-label">Nível:</div>
+            <div class="level-dot active"></div>
+            <div class="level-dot active"></div>
+            <div class="level-dot active"></div>
+            <div class="level-dot"></div>
+            <div class="level-dot"></div>
+            <div style="font-size:.72rem;color:var(--gray2);margin-left:.4rem">Iniciante ao intermediário</div>
+          </div>
+          <a href="https://wa.me/5521991755665?text=Ol%C3%A1!%20Quero%20me%20matricular%20em%20Teoria%20Musical." target="_blank" class="btn btn-primary btn-sm btn-full">Quero me matricular</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Material vocal CTA -->
+    <div class="vocal-cta fade-up" style="margin-top:4rem">
+      <div class="vocal-cta-text">
+        <div class="chip chip-neon" style="margin-bottom:0.75rem">📱 Disponível agora</div>
+        <h3>Material Online de <span style="color:var(--neon)">Preparação Vocal</span></h3>
+        <p>Faça o teste e descubra o material ideal para a sua voz. Acesso imediato, em qualquer dispositivo.</p>
+      </div>
+      <a href="https://wa.me/5521991755665?text=Ol%C3%A1!%20Quero%20acessar%20o%20material%20de%20prepara%C3%A7%C3%A3o%20vocal%20online." target="_blank" class="btn btn-neon btn-lg" style="flex-shrink:0">
+        Quero aprender a preparar minha voz! →
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Escola de <span>Música</span> Arena RP</div>
+        <p class="footer-desc">A escola de música mais preparada e completa do Rio de Janeiro.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/escolademusicaarp/" target="_blank" class="footer-social-btn">📸</a>
+          <a href="https://wa.me/5521991755665" target="_blank" class="footer-social-btn">💬</a>
+          <a href="https://wa.me/5521973818841" target="_blank" class="footer-social-btn">💬</a>
+        </div>
+      </div>
+      <div><div class="footer-col-h">Páginas</div><div class="footer-links"><a href="index.html">Início</a><a href="sobre.html">Sobre</a><a href="cursos.html">Cursos</a><a href="festival.html">Festival</a><a href="polos.html">Polos</a><a href="contato.html">Contato</a></div></div>
+      <div><div class="footer-col-h">Cursos</div><div class="footer-links"><a href="cursos.html">Canto</a><a href="cursos.html">Violão & Guitarra</a><a href="cursos.html">Bateria</a><a href="cursos.html">Piano</a><a href="cursos.html">Musicalização</a></div></div>
+      <div><div class="footer-col-h">Contato</div><div class="footer-links"><a href="https://wa.me/5521991755665" target="_blank">📞 Bangu</a><a href="https://wa.me/5521973818841" target="_blank">📞 Ilha do Gov.</a><a href="https://www.instagram.com/escolademusicaarp/" target="_blank">📸 Instagram</a></div></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2024 Escola de Música <span>Arena RP</span>. Todos os direitos reservados.</div>
+      <div>Feito com ❤️ para quem ama música</div>
+    </div>
+  </div>
+</footer>
+
+<div class="chat-launcher">
+  <div class="chat-panel" id="chat-panel">
+    <div class="chat-header">
+      <div class="chat-header-left"><div class="chat-avatar">🎵</div><div><div class="chat-name">Arena RP</div><div class="chat-status">Online agora</div></div></div>
+      <div class="chat-close" id="chat-close">✕</div>
+    </div>
+    <div class="chat-messages"><div class="chat-msg">Quer saber mais sobre algum curso? 🎵</div></div>
+    <div class="chat-options">
+      <a href="https://wa.me/5521991755665?text=Ol%C3%A1!%20Quero%20informações%20sobre%20os%20cursos." target="_blank" class="chat-option">📍 Falar com Polo Bangu</a>
+      <a href="https://wa.me/5521973818841?text=Ol%C3%A1!%20Quero%20informações%20sobre%20os%20cursos." target="_blank" class="chat-option">📍 Falar com Polo Ilha do Gov.</a>
+      <a href="contato.html" class="chat-option">📝 Formulário de contato</a>
+    </div>
+  </div>
+  <div class="chat-btn" id="chat-toggle">💬</div>
+</div>
+
+<script src="js/main.js"></script>
+<script>
+  // Filter tabs
+  document.querySelectorAll('.filter-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const filter = tab.dataset.filter;
+      document.querySelectorAll('.course-card-premium').forEach(card => {
+        if (filter === 'all' || card.dataset.category.includes(filter)) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>
